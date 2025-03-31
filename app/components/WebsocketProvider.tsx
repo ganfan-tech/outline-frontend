@@ -73,16 +73,16 @@ class WebsocketProvider extends React.Component<Props> {
   };
 
   createConnection = () => {
-    this.socket = io(window.location.origin, {
-      path: "/realtime",
-      transports: ["websocket"],
-      reconnectionDelay: 1000,
-      reconnectionDelayMax: 30000,
-      withCredentials: true,
-    });
-    invariant(this.socket, "Socket should be defined");
+    // this.socket = io(window.location.origin, {
+    //   path: "/realtime",
+    //   transports: ["websocket"],
+    //   reconnectionDelay: 1000,
+    //   reconnectionDelayMax: 30000,
+    //   withCredentials: true,
+    // });
+    // invariant(this.socket, "Socket should be defined");
 
-    this.socket.authenticated = false;
+    // this.socket.authenticated = false;
     const {
       auth,
       documents,
@@ -103,6 +103,21 @@ class WebsocketProvider extends React.Component<Props> {
     } = this.props;
 
     const currentUserId = auth?.user?.id;
+
+    this.socket = io("localhost:3000", {
+      path: "/realtime",
+      transports: ["websocket"],
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 30000,
+      withCredentials: false,
+      auth: {
+        token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmZGEyYzExLWQwZDktNDJjMi05NzkyLTlmNDk4MGQzZTdiZSIsImV4cGlyZXNBdCI6IjIwMjUtMDYtMjRUMTU6MjA6MDkuMDM5WiIsInR5cGUiOiJzZXNzaW9uIiwiaWF0IjoxNzQyODI5NjA5fQ.dMahpABKuNL5s3ii6IHtGJoyr-cRKlXYdUVHiy38n0I",
+      },
+    });
+    invariant(this.socket, "Socket should be defined");
+
+    this.socket.authenticated = false;
 
     // on reconnection, reset the transports option, as the Websocket
     // connection may have failed (caused by proxy, firewall, browser, ...)

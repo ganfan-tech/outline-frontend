@@ -6,38 +6,31 @@ import { webpackStats } from "rollup-plugin-webpack-stats";
 import { CommonServerOptions, defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 import { viteStaticCopy } from "vite-plugin-static-copy";
-import environment from "./server/utils/environment";
 
-let httpsConfig: CommonServerOptions["https"] | undefined;
-
-if (environment.NODE_ENV === "development") {
-  try {
-    httpsConfig = {
-      key: fs.readFileSync("./server/config/certs/private.key"),
-      cert: fs.readFileSync("./server/config/certs/public.cert"),
-    };
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.warn("No local SSL certs found, HTTPS will not be available");
-  }
-}
+const devProxyServer = "http://localhost:3000";
 
 export default () =>
   defineConfig({
     root: "./",
     publicDir: "./server/static",
-    base: (environment.CDN_URL ?? "") + "/static/",
     server: {
-      port: 3001,
+      port: 7001,
       host: true,
-      https: httpsConfig,
-      fs:
-        environment.NODE_ENV === "development"
-          ? {
-              // Allow serving files from one level up to the project root
-              allow: [".."],
-            }
-          : { strict: true },
+      proxy: {
+        "^/api": {
+          target: devProxyServer,
+          xfwd: true,
+        },
+        "^/memos.api.v1": {
+          target: devProxyServer,
+          xfwd: true,
+        },
+        "^/file": {
+          target: devProxyServer,
+          xfwd: true,
+        },
+      },
+      fs: { strict: true },
     },
     plugins: [
       // https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#readme
@@ -87,7 +80,7 @@ export default () =>
           globPatterns: ["**/*.{js,css,ico,png,svg}"],
           navigateFallback: null,
           modifyURLPrefix: {
-            "": `${environment.CDN_URL ?? ""}/static/`,
+            "": `/static/`,
           },
           runtimeCaching: [
             {

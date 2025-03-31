@@ -97,6 +97,10 @@ class ApiClient {
     }
 
     const headers = new Headers(headerOptions);
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmZGEyYzExLWQwZDktNDJjMi05NzkyLTlmNDk4MGQzZTdiZSIsImV4cGlyZXNBdCI6IjIwMjUtMDYtMjRUMTU6MjA6MDkuMDM5WiIsInR5cGUiOiJzZXNzaW9uIiwiaWF0IjoxNzQyODI5NjA5fQ.dMahpABKuNL5s3ii6IHtGJoyr-cRKlXYdUVHiy38n0I";
+    headers.set("authorization", `Bearer ${token}`);
+
     const timeStart = window.performance.now();
     let response;
 
