@@ -1,10 +1,8 @@
-import fs from "fs";
 import path from "path";
 import react from "@vitejs/plugin-react";
 import browserslistToEsbuild from "browserslist-to-esbuild";
 import { webpackStats } from "rollup-plugin-webpack-stats";
-import { CommonServerOptions, defineConfig } from "vite";
-import { VitePWA } from "vite-plugin-pwa";
+import { defineConfig } from "vite";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 
 const devProxyServer = "http://localhost:3000";
@@ -70,67 +68,6 @@ export default () =>
             dest: "./",
           },
         ],
-      }),
-      // https://vite-pwa-org.netlify.app/
-      VitePWA({
-        injectRegister: "inline",
-        registerType: "autoUpdate",
-        workbox: {
-          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
-          globPatterns: ["**/*.{js,css,ico,png,svg}"],
-          navigateFallback: null,
-          modifyURLPrefix: {
-            "": `/static/`,
-          },
-          runtimeCaching: [
-            {
-              urlPattern: /api\/urls\.unfurl$/,
-              handler: "CacheOnly",
-              options: {
-                cacheName: "unfurl-cache",
-                expiration: {
-                  maxEntries: 100,
-                  maxAgeSeconds: 60 * 60,
-                },
-                cacheableResponse: {
-                  statuses: [0, 200],
-                },
-              },
-            },
-          ],
-        },
-        manifest: {
-          name: "Outline",
-          short_name: "Outline",
-          theme_color: "#fff",
-          background_color: "#fff",
-          start_url: "/",
-          scope: ".",
-          display: "standalone",
-          // For Chrome, you must provide at least a 192x192 pixel icon, and a 512x512 pixel icon.
-          // If only those two icon sizes are provided, Chrome will automatically scale the icons
-          // to fit the device. If you'd prefer to scale your own icons, and adjust them for
-          // pixel-perfection, provide icons in increments of 48dp.
-          icons: [
-            {
-              src: "/static/images/icon-192.png",
-              sizes: "192x192",
-              type: "image/png",
-            },
-            {
-              src: "/static/images/icon-512.png",
-              sizes: "512x512",
-              type: "image/png",
-            },
-            // last one duplicated for purpose: 'any maskable'
-            {
-              src: "/static/images/icon-512.png",
-              sizes: "512x512",
-              type: "image/png",
-              purpose: "any maskable",
-            },
-          ],
-        },
       }),
       // Generate a stats.json file for webpack that will be consumed by RelativeCI
       webpackStats(),

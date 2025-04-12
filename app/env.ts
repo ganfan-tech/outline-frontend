@@ -15,8 +15,8 @@ declare global {
 const env = {
   analytics: [],
   ENVIRONMENT: "development",
-  URL: "https://wiki.ganfan.tech",
-  COLLABORATION_URL: "wss://wiki.ganfan.tech",
+  URL: "http://localhost:3000",
+  COLLABORATION_URL: "ws://localhost:3000",
   DEFAULT_LANGUAGE: "en_US",
   EMAIL_ENABLED: true,
   AWS_S3_ACCELERATE_URL: "",

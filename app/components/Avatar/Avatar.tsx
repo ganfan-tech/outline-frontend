@@ -31,7 +31,7 @@ type Props = {
 };
 
 function Avatar(props: Props) {
-  const { showBorder, model, style, ...rest } = props;
+  const { showBorder, model, style, size = AvatarSize.Medium, ...rest } = props;
   const src = props.src || model?.avatarUrl;
   const [error, handleError] = useBoolean(false);
 
@@ -42,22 +42,24 @@ function Avatar(props: Props) {
           onError={handleError}
           src={src}
           $showBorder={showBorder}
+          size={size}
           {...rest}
         />
       ) : model ? (
-        <Initials color={model.color} $showBorder={showBorder} {...rest}>
+        <Initials
+          color={model.color}
+          $showBorder={showBorder}
+          size={size}
+          {...rest}
+        >
           {model.initial}
         </Initials>
       ) : (
-        <Initials $showBorder={showBorder} {...rest} />
+        <Initials $showBorder={showBorder} size={size} {...rest} />
       )}
     </Relative>
   );
 }
-
-Avatar.defaultProps = {
-  size: AvatarSize.Medium,
-};
 
 const Relative = styled.div`
   position: relative;

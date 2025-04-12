@@ -1,4 +1,3 @@
-import { Divider } from "antd";
 import fractionalIndex from "fractional-index";
 import { observer } from "mobx-react";
 import * as React from "react";
@@ -139,7 +138,6 @@ const CollectionDocTree = () => {
         </i>
       </Flex>
 
-      <Divider />
       <Relative>
         <CollectionLinkChildren
           collection={currentCollection}

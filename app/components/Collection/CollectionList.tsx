@@ -1,9 +1,5 @@
-import { List } from "antd";
 import * as React from "react";
-import { useTranslation } from "react-i18next";
 import Collection from "~/models/Collection";
-import Error from "~/components/List/Error";
-import PaginatedList from "~/components/PaginatedList";
 import CollectionItem from "./CollectionItem";
 
 type Props = {
@@ -20,51 +16,22 @@ type Props = {
 };
 
 const CollectionList = React.memo<Props>(function CollectionList({
-  empty,
-  heading,
   collections,
-  fetch,
   options,
   showParentDocuments,
   showCollection,
   showPublished,
   showTemplate,
   showDraft,
-  ...rest
 }: Props) {
-  const { t } = useTranslation();
-
   return (
-    <List
-      grid={{ gutter: 16, column: 4 }}
-      dataSource={collections}
-      renderItem={(item) => (
-        <List.Item>
-          <CollectionItem
-            key={item.id}
-            collection={item}
-            showPin={!!options?.collectionId}
-            showParentDocuments={showParentDocuments}
-            showCollection={showCollection}
-            showPublished={showPublished}
-            showTemplate={showTemplate}
-            showDraft={showDraft}
-          />
-        </List.Item>
-      )}
-    />
-  );
-
-  return (
-    <PaginatedList
-      aria-label={t("Documents")}
-      items={collections}
-      empty={empty}
-      heading={heading}
-      fetch={fetch}
-      options={options}
-      renderError={(props) => <Error {...props} />}
-      renderItem={(item: Collection, _index) => (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 1fr)",
+      }}
+    >
+      {collections.map((item) => (
         <CollectionItem
           key={item.id}
           collection={item}
@@ -75,9 +42,8 @@ const CollectionList = React.memo<Props>(function CollectionList({
           showTemplate={showTemplate}
           showDraft={showDraft}
         />
-      )}
-      {...rest}
-    />
+      ))}
+    </div>
   );
 });
 

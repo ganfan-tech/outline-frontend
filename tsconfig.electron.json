@@ -1,0 +1,54 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "jsx": "react",
+    "lib": [
+      "dom",
+      "es2020",
+      "dom.iterable",
+      "esnext.asynciterable"
+    ],
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "noErrorTruncation": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": false,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "noEmit": false,
+    "outDir": "build/main",
+    "skipLibCheck": true,
+    "ignoreDeprecations": "5.0",
+    "target": "ES2022",
+    "paths": {
+      "@server/*": [
+        "./server/*"
+      ],
+      "@shared/*": [
+        "./shared/*"
+      ],
+      "~/*": [
+        "./app/*"
+      ]
+    }
+  },
+  "rootDir": "main",
+  "strict": true,
+  "include": [
+    "main/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
+}
